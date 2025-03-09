@@ -1,0 +1,23 @@
+{
+  "name": "web-manager",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "13.4.19",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "axios": "1.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.2.3",
+    "@types/react": "^18.2.6",
+    "typescript": "^5.0.4",
+    "eslint": "^8.41.0",
+    "eslint-config-next": "^13.4.3"
+  }
+} 
