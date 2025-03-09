@@ -1,0 +1,163 @@
+/* 天气位置动画效果 */
+.weather-card {
+  transition: all 0.5s ease;
+}
+
+.weather-card:hover {
+  box-shadow: 0 10px 30px rgba(67, 97, 238, 0.15);
+}
+
+.location-badge span {
+  display: inline-block;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.location-badge span:hover {
+  transform: translateY(-3px) scale(1.05);
+}
+
+.weather-icon-pulse {
+  animation: weather-pulse 2s infinite;
+}
+
+@keyframes weather-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.temperature-text {
+  transition: all 0.3s ease;
+}
+
+.weather-container:hover .temperature-text {
+  transform: scale(1.1);
+  text-shadow: 0 0 10px rgba(67, 97, 238, 0.3);
+}
+
+.weather-detail-item {
+  transition: all 0.3s ease;
+}
+
+.weather-detail-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 番茄时钟动画效果 */
+.pomodoro-card {
+  transition: all 0.5s ease;
+}
+
+.pomodoro-card:hover {
+  box-shadow: 0 10px 30px rgba(247, 37, 133, 0.15);
+}
+
+.pomodoro-icon {
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.tomato-mode {
+  transform: rotate(360deg);
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+  40% {transform: translateY(-15px);}
+  60% {transform: translateY(-7px);}
+}
+
+#tomatoImg {
+  animation: bounce 2s infinite;
+}
+
+.pulsate {
+  animation: pulsate 1s ease-in-out infinite alternate;
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+.pomodoro-stat-item {
+  transition: all 0.3s ease;
+}
+
+.pomodoro-stat-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.pomodoro-stat-value {
+  transition: all 0.3s ease;
+}
+
+.pomodoro-stat-item:hover .pomodoro-stat-value {
+  transform: scale(1.1);
+  color: #f72585;
+}
+
+/* 日历动画效果 */
+.calendar-day {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.calendar-day:hover {
+  transform: scale(1.15);
+  z-index: 2;
+}
+
+.calendar-day.today {
+  animation: today-pulse 2s infinite;
+}
+
+@keyframes today-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 5px rgba(67, 97, 238, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(67, 97, 238, 0);
+  }
+}
+
+/* 按钮交互动画 */
+.btn {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* 自定义时间输入动画 */
+.time-setting input {
+  transition: all 0.3s ease;
+}
+
+.time-setting input:focus {
+  transform: scale(1.05);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+} 

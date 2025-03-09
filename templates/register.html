@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}注册 - 班级成绩管理系统{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="auth-logo">
+                <i class="fas fa-user-plus"></i>
+            </div>
+            <h2 class="auth-title">创建账号</h2>
+            <p class="auth-subtitle">Experience matters for good applications</p>
+        </div>
+        <div class="auth-body">
+            <form method="POST" class="auth-form">
+                <div class="mb-4">
+                    <label for="username" class="form-label form-label-modern">用户名</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <input type="text" class="form-control form-control-modern" id="username" name="username" placeholder="请输入用户名" required>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="form-label form-label-modern">密码</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" class="form-control form-control-modern" id="password" name="password" placeholder="请输入密码" required>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="confirm_password" class="form-label form-label-modern">确认密码</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-check-circle"></i></span>
+                        <input type="password" class="form-control form-control-modern" id="confirm_password" name="confirm_password" placeholder="请再次输入密码" required>
+                    </div>
+                </div>
+                <div class="mb-4 form-check">
+                    <input type="checkbox" class="form-check-input" id="is_admin" name="is_admin">
+                    <label class="form-check-label" for="is_admin">注册为管理员</label>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-modern btn-modern-primary btn-auth">创建账号</button>
+                </div>
+            </form>
+        </div>
+        <div class="auth-footer">
+            <p>已有账号？<a href="{{ url_for('login') }}" class="text-primary">返回登录</a></p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

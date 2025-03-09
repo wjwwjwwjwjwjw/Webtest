@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}添加成绩 - {{ student.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">添加成绩</h2>
+    <h5 class="mb-3">学生：{{ student.name }} ({{ student.student_id }})</h5>
+    
+    <!-- 文件导入表单 -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0">批量导入成绩</h5>
+        </div>
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data" action="{{ url_for('import_grades', student_id=student.student_id) }}">
+                <div class="mb-3">
+                    <label for="grade_file" class="form-label">选择成绩文件（支持.txt和.xlsx格式）</label>
+                    <input type="file" class="form-control" id="grade_file" name="grade_file" 
+                           accept=".txt,.xlsx" required>
+                    <div class="form-text">
+                        文件格式说明：<br>
+                        - TXT文件：每行一条记录，格式为"课程名称,课程性质,学分,5.0,成绩,是否保研课程,学年"<br>
+                        例如：概率与统计A,必修,3.0,5.0,100,是,大二学年<br>
+                        - Excel文件：需包含以下列名：课程名称、课程性质、学分、成绩、是否保研课程、学年
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">导入成绩</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- 手动添加成绩表单 -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">手动添加成绩</h5>
+        </div>
+        <div class="card-body">
+            <form id="addGradeForm" method="POST" onsubmit="FormHandler.handleSubmit(this, event)" class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="course_name">课程名称 <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="course_name" name="course_name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="course_type">课程性质 <span class="text-danger">*</span></label>
+                            <select class="form-control" id="course_type" name="course_type" required>
+                                <option value="必修">必修</option>
+                                <option value="选修">选修</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="credit">学分 <span class="text-danger">*</span></label>
+                            <select class="form-control" id="credit" name="credit" required>
+                                {% for credit in [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0] %}
+                                <option value="{{ credit }}">{{ credit }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="score">成绩 <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="score" name="score" 
+                                   min="0" max="100" required>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="year">学年 <span class="text-danger">*</span></label>
+                            <select class="form-control" id="year" name="year" required>
+                                <option value="大一学年">大一学年</option>
+                                <option value="大二学年">大二学年</option>
+                                <option value="大三学年">大三学年</option>
+                                <option value="大四学年">大四学年</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="research">是否为保研课程</label>
+                    <select class="form-control" id="research" name="research">
+                        <option value="否">否</option>
+                        <option value="是">是</option>
+                    </select>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">保存</button>
+                    <a href="{{ url_for('student_detail', student_id=student.student_id) }}" 
+                       class="btn btn-secondary">返回</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 

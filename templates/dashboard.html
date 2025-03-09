@@ -1,0 +1,362 @@
+{% extends 'base.html' %}
+
+{% block title %}首页 - 班级成绩管理系统{% endblock %}
+
+{% block content %}
+<div class="container my-4 fade-in">
+    <h2 class="mb-4">欢迎使用班级成绩管理系统</h2>
+    
+    <div class="row">
+        <!-- 左侧区域：日历和工具卡片 -->
+        <div class="col-lg-8">
+            <!-- 位置天气卡片 -->
+            <div class="card mb-4 weather-card ios-weather-card">
+                <a href="{{ url_for('weather_detail') }}" class="text-decoration-none weather-card-link">
+                    <div class="card-body p-0">
+                        <!-- 天气标题区域 -->
+                        <div class="ios-weather-header">
+                            <div class="d-flex justify-content-between">
+                                <div class="weather-location">
+                                    <h5 id="location-district">甘井子区 <i class="fas fa-map-marker-alt"></i></h5>
+                                </div>
+                                <div class="weather-refresh">
+                                    <button id="refreshWeather" class="btn-refresh">
+                                        <i class="fas fa-cloud"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- 当前温度和天气 -->
+                            <div class="current-temp-container d-flex justify-content-between align-items-center">
+                                <div class="current-temp">
+                                    <span id="temperature">7</span>°
+                                </div>
+                                <div class="temp-range">
+                                    <div class="high-temp">最高 <span id="temp-high">8</span>°</div>
+                                    <div class="low-temp">最低 <span id="temp-low">0</span>°</div>
+                                </div>
+                            </div>
+                            
+                            <div class="weather-desc" id="weather-desc">大雾</div>
+                        </div>
+                        
+                        <!-- 小时级别天气预报 -->
+                        <div class="hourly-forecast">
+                            <div class="forecast-scroll-container">
+                                <div class="forecast-item">
+                                    <div class="forecast-time">16时</div>
+                                    <div class="forecast-icon"><i class="fas fa-sun"></i></div>
+                                    <div class="forecast-temp">7°</div>
+                                </div>
+                                <div class="forecast-item">
+                                    <div class="forecast-time">17时</div>
+                                    <div class="forecast-icon"><i class="fas fa-sun"></i></div>
+                                    <div class="forecast-temp">6°</div>
+                                </div>
+                                <div class="forecast-item">
+                                    <div class="forecast-time">17:54</div>
+                                    <div class="forecast-icon"><i class="fas fa-sunset"></i></div>
+                                    <div class="forecast-temp">5°</div>
+                                </div>
+                                <div class="forecast-item">
+                                    <div class="forecast-time">18时</div>
+                                    <div class="forecast-icon"><i class="fas fa-moon"></i></div>
+                                    <div class="forecast-temp">5°</div>
+                                </div>
+                                <div class="forecast-item">
+                                    <div class="forecast-time">19时</div>
+                                    <div class="forecast-icon"><i class="fas fa-moon"></i></div>
+                                    <div class="forecast-temp">4°</div>
+                                </div>
+                                <div class="forecast-item">
+                                    <div class="forecast-time">20时</div>
+                                    <div class="forecast-icon"><i class="fas fa-moon"></i></div>
+                                    <div class="forecast-temp">4°</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 未来几天预报 -->
+                        <div class="daily-forecast">
+                            <div class="daily-item">
+                                <div class="daily-day">周一</div>
+                                <div class="daily-icon"><i class="fas fa-sun"></i></div>
+                                <div class="daily-temp-range">
+                                    <div class="daily-low">3°</div>
+                                    <div class="daily-temp-bar"></div>
+                                    <div class="daily-high">12°</div>
+                                </div>
+                            </div>
+                            <div class="daily-item">
+                                <div class="daily-day">周二</div>
+                                <div class="daily-icon"><i class="fas fa-cloud-sun"></i></div>
+                                <div class="daily-temp-range">
+                                    <div class="daily-low">5°</div>
+                                    <div class="daily-temp-bar"></div>
+                                    <div class="daily-high">12°</div>
+                                </div>
+                            </div>
+                            <div class="daily-item">
+                                <div class="daily-day">周三</div>
+                                <div class="daily-icon"><i class="fas fa-sun"></i></div>
+                                <div class="daily-temp-range">
+                                    <div class="daily-low">3°</div>
+                                    <div class="daily-temp-bar"></div>
+                                    <div class="daily-high">12°</div>
+                                </div>
+                            </div>
+                            <div class="daily-item">
+                                <div class="daily-day">周四</div>
+                                <div class="daily-icon"><i class="fas fa-sun"></i></div>
+                                <div class="daily-temp-range">
+                                    <div class="daily-low">2°</div>
+                                    <div class="daily-temp-bar"></div>
+                                    <div class="daily-high">8°</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- 日历卡片 -->
+            <div class="card mb-4 ios-calendar-card">
+                <div class="card-body p-0">
+                    <div class="ios-calendar-header">
+                        <h2 id="calendar-year-month">2025 / 3</h2>
+                    </div>
+                    
+                    <!-- 星期标题 -->
+                    <div class="ios-calendar-weekdays">
+                        <div class="weekday">日</div>
+                        <div class="weekday">一</div>
+                        <div class="weekday">二</div>
+                        <div class="weekday">三</div>
+                        <div class="weekday">四</div>
+                        <div class="weekday">五</div>
+                        <div class="weekday">六</div>
+                    </div>
+                    
+                    <!-- 日历主体 -->
+                    <div class="ios-calendar-days" id="ios-calendar-days">
+                        <!-- 日期内容将由JS生成 -->
+                    </div>
+                    
+                    <!-- 日历底部农历信息 -->
+                    <div class="ios-calendar-footer">
+                        <div class="lunar-info" id="selected-date-info">
+                            <h4>二月初十</h4>
+                            <p>乙巳蛇年 己卯月 丁五日</p>
+                        </div>
+                        
+                        <!-- 假日提醒 -->
+                        <div class="holiday-reminder">
+                            <div class="holiday-item">
+                                <div class="holiday-name">植树节</div>
+                                <div class="holiday-date">3月12日</div>
+                                <div class="holiday-countdown">3<span>天</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 日历底部导航 -->
+                    <div class="ios-calendar-nav">
+                        <button class="ios-nav-btn active" id="monthViewBtn">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>月</span>
+                        </button>
+                        <button class="ios-nav-btn" id="weekViewBtn">
+                            <i class="fas fa-calendar-week"></i>
+                            <span>三日</span>
+                        </button>
+                        <button class="ios-nav-btn" id="lunarViewBtn">
+                            <i class="fas fa-moon"></i>
+                            <span>农历</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 功能卡片区域 -->
+            <div class="row">
+                <!-- 学生管理卡片 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 feature-card">
+                        <div class="card-body text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h5 class="card-title">学生管理</h5>
+                            <p class="card-text">添加和管理学生信息</p>
+                            <a href="{{ url_for('student_list') }}" class="btn btn-primary">查看学生</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 统计分析卡片 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 feature-card">
+                        <div class="card-body text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <h5 class="card-title">统计分析</h5>
+                            <p class="card-text">查看班级统计报告</p>
+                            <a href="{{ url_for('reports') }}" class="btn btn-info">查看报告</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 数据导出卡片 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 feature-card">
+                        <div class="card-body text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-file-export"></i>
+                            </div>
+                            <h5 class="card-title">数据导出</h5>
+                            <p class="card-text">导出班级成绩数据</p>
+                            <a href="{{ url_for('export_excel') }}" class="btn btn-success">导出Excel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 右侧区域：专注时钟和最近更新 -->
+        <div class="col-lg-4">
+            <!-- 专注时钟卡片 -->
+            <div class="card mb-4 pomodoro-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0"><i class="fas fa-clock"></i> 番茄专注时钟</h5>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="enableTomatoMode">
+                        <label class="form-check-label" for="enableTomatoMode">番茄模式</label>
+                    </div>
+                </div>
+                <div class="card-body text-center">
+                    <div class="pomodoro-container animate__animated animate__fadeIn">
+                        <div class="pomodoro-icon-wrapper">
+                            <div class="pomodoro-icon" id="tomatoIcon">
+                                <img src="https://cdn.jsdelivr.net/gh/google/material-design-icons@master/png/device/access_time/materialicons/24dp/1x/baseline_access_time_black_24dp.png" alt="时钟" id="clockIcon">
+                                <img src="{{ url_for('static', filename='img/tomato.png') }}" alt="番茄" id="tomatoImg" class="d-none">
+                            </div>
+                        </div>
+                        <h2 id="pomodoroTime" class="display-4 mb-3">00:25:00</h2>
+                    </div>
+                    
+                    <div class="time-setting-container mb-4">
+                        <h6 class="time-setting-header mb-2">自定义专注时间</h6>
+                        <div class="time-picker">
+                            <div class="time-unit">
+                                <label>小时</label>
+                                <div class="input-group time-spinner">
+                                    <button class="btn btn-outline-secondary btn-sm" type="button" id="decreaseHours"><i class="fas fa-chevron-up"></i></button>
+                                    <input type="number" class="form-control text-center" id="customHours" value="0" min="0" max="12">
+                                    <button class="btn btn-outline-secondary btn-sm" type="button" id="increaseHours"><i class="fas fa-chevron-down"></i></button>
+                                </div>
+                            </div>
+                            
+                            <div class="time-unit">
+                                <label>分钟</label>
+                                <div class="input-group time-spinner">
+                                    <button class="btn btn-outline-secondary btn-sm" type="button" id="decreaseMinutes"><i class="fas fa-chevron-up"></i></button>
+                                    <input type="number" class="form-control text-center" id="customMinutes" value="25" min="0" max="59">
+                                    <button class="btn btn-outline-secondary btn-sm" type="button" id="increaseMinutes"><i class="fas fa-chevron-down"></i></button>
+                                </div>
+                            </div>
+                            
+                            <div class="time-unit">
+                                <label>秒钟</label>
+                                <div class="input-group time-spinner">
+                                    <button class="btn btn-outline-secondary btn-sm" type="button" id="decreaseSeconds"><i class="fas fa-chevron-up"></i></button>
+                                    <input type="number" class="form-control text-center" id="customSeconds" value="0" min="0" max="59">
+                                    <button class="btn btn-outline-secondary btn-sm" type="button" id="increaseSeconds"><i class="fas fa-chevron-down"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="time-presets mt-2">
+                            <button class="btn btn-sm btn-outline-secondary preset-btn" data-hours="0" data-minutes="25" data-seconds="0">25分钟</button>
+                            <button class="btn btn-sm btn-outline-secondary preset-btn" data-hours="0" data-minutes="45" data-seconds="0">45分钟</button>
+                            <button class="btn btn-sm btn-outline-secondary preset-btn" data-hours="1" data-minutes="0" data-seconds="0">1小时</button>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mb-4">
+                        <button class="btn btn-outline-primary" id="shortBreak">短休息</button>
+                        <button class="btn btn-primary" id="startTimer">开始专注</button>
+                        <button class="btn btn-outline-primary" id="longBreak">长休息</button>
+                    </div>
+                    
+                    <div class="form-group mb-3">
+                        <input type="text" class="form-control task-input" id="focusTaskInput" placeholder="我正在专注于...">
+                    </div>
+                    
+                    <div class="pomodoro-stats">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="pomodoro-stat-item">
+                                    <span class="pomodoro-stat-label">今日专注</span>
+                                    <span class="pomodoro-stat-value" id="focusCount">0</span>
+                                    <span class="pomodoro-stat-unit">次</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="pomodoro-stat-item">
+                                    <span class="pomodoro-stat-label">总时长</span>
+                                    <span class="pomodoro-stat-value" id="totalFocusTime">0</span>
+                                    <span class="pomodoro-stat-unit">分钟</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="pomodoro-stat-item">
+                                    <span class="pomodoro-stat-label">专注效率</span>
+                                    <span class="pomodoro-stat-value" id="focusEfficiency">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 最近更新卡片 -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="fas fa-history"></i> 最近更新</h5>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        {% for update in recent_updates %}
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    {% if update.type == '学生' %}
+                                    <span class="badge bg-primary">{{ update.type }}</span>
+                                    {% else %}
+                                    <span class="badge bg-info">{{ update.type }}</span>
+                                    {% endif %}
+                                    {{ update.content }}
+                                </div>
+                                <small class="text-muted">{{ update.time }}</small>
+                            </div>
+                        </li>
+                        {% else %}
+                        <li class="list-group-item text-center">暂无更新</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+{% endblock %}
+
+{% block scripts %}
+<!-- 引用自定义的dashboard.js -->
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %} 

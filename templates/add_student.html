@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}添加学生 - 班级成绩管理系统{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">添加新学生</h2>
+    
+    <form id="addStudentForm" method="POST" action="{{ url_for('add_student') }}" class="needs-validation" novalidate>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="student_id">学号 <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="student_id" name="student_id" required>
+                    <div class="invalid-feedback">
+                        请输入学号
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">姓名 <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                    <div class="invalid-feedback">
+                        请输入姓名
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="gender">性别</label>
+                    <select class="form-control" id="gender" name="gender">
+                        <option value="未知">请选择</option>
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="major">专业</label>
+                    <input type="text" class="form-control" id="major" name="major">
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="admission_year">入学年份</label>
+                    <input type="text" class="form-control" id="admission_year" name="admission_year" 
+                           placeholder="例如：2023">
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">保存</button>
+            <a href="{{ url_for('student_list') }}" class="btn btn-secondary">返回</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// 表单验证
+(function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        var forms = document.getElementsByClassName('needs-validation');
+        var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+})();
+</script>
+{% endblock %} 

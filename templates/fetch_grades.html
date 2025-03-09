@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}从网站获取成绩 - {{ student.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">从教务系统获取成绩</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="mb-3">学生: {{ student.name }} ({{ student.student_id }})</h6>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> 
+                        提供教务系统网址和登录信息，系统将自动获取成绩。获取的成绩将自动检查重复课程。
+                    </div>
+                    
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="website_url" class="form-label">教务系统网址</label>
+                            <input type="url" class="form-control" id="website_url" name="website_url" 
+                                   placeholder="例如: https://jwxt.example.edu.cn" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="username" class="form-label">用户名</label>
+                            <input type="text" class="form-control" id="username" name="username" 
+                                   placeholder="教务系统用户名" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="password" class="form-label">密码</label>
+                            <input type="password" class="form-control" id="password" name="password" 
+                                   placeholder="教务系统密码" required>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">获取成绩数据</button>
+                            <a href="{{ url_for('student_detail', student_id=student.student_id) }}" 
+                               class="btn btn-secondary">返回</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

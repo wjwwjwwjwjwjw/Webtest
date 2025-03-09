@@ -1,0 +1,554 @@
+{
+  "class_name": "",
+  "students": {
+    "20221071389": {
+      "student_id": "20221071389",
+      "name": "王俊伟",
+      "gender": "男",
+      "major": "控制科学与工程",
+      "admission_year": "2022",
+      "grades": [
+        {
+          "course_name": "概率与统计A",
+          "course_type": "必修",
+          "credit": 3.0,
+          "score": 100,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "劳动1-1",
+          "course_type": "必修",
+          "credit": 0.5,
+          "score": 100,
+          "gpa": 4.0,
+          "research": "否",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "数字电路与系统",
+          "course_type": "必修",
+          "credit": 3.0,
+          "score": 99,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "数据结构课程设计",
+          "course_type": "选修",
+          "credit": 1.0,
+          "score": 99,
+          "gpa": 4.0,
+          "research": "否",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "国家安全教育",
+          "course_type": "必修",
+          "credit": 1.0,
+          "score": 99,
+          "gpa": 4.0,
+          "research": "否",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "数字电路综合设计实验",
+          "course_type": "必修",
+          "credit": 1.5,
+          "score": 99,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "军事理论",
+          "course_type": "必修",
+          "credit": 2.0,
+          "score": 98,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "模拟电子线路",
+          "course_type": "必修",
+          "credit": 3.0,
+          "score": 97,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "积分变换与场论C",
+          "course_type": "必修",
+          "credit": 2.0,
+          "score": 97,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "离散数学",
+          "course_type": "必修",
+          "credit": 2.0,
+          "score": 97,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "电力电子技术",
+          "course_type": "选修",
+          "credit": 3.0,
+          "score": 97,
+          "gpa": 4.0,
+          "research": "否",
+          "year": "大三学年"
+        },
+        {
+          "course_name": "电机与拖动实验",
+          "course_type": "必修",
+          "credit": 1.0,
+          "score": 96,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "程序设计基础A",
+          "course_type": "必修",
+          "credit": 3.0,
+          "score": 96,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "电机与拖动",
+          "course_type": "必修",
+          "credit": 3.0,
+          "score": 95,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "大学物理A2",
+          "course_type": "必修",
+          "credit": 3.0,
+          "score": 95,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "程序设计基础A课程设计",
+          "course_type": "必修",
+          "credit": 1.0,
+          "score": 95,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "认识实习",
+          "course_type": "必修",
+          "credit": 1.0,
+          "score": 95,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "计算机原理实验",
+          "course_type": "必修",
+          "credit": 1.0,
+          "score": 95,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大三学年"
+        },
+        {
+          "course_name": "中国近现代史纲要",
+          "course_type": "必修",
+          "credit": 2.5,
+          "score": 94,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "电路实验",
+          "course_type": "必修",
+          "credit": 1.0,
+          "score": 94,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "大学物理A1",
+          "course_type": "必修",
+          "credit": 3.5,
+          "score": 94,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "大学英语1",
+          "course_type": "必修",
+          "credit": 2.0,
+          "score": 94,
+          "gpa": 4.0,
+          "research": "否",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "习思想",
+          "course_type": "必修",
+          "credit": 3.0,
+          "score": 94,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大三学年"
+        },
+        {
+          "course_name": "马克思主义基本原理",
+          "course_type": "必修",
+          "credit": 3.0,
+          "score": 93,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "毛泽东思想和中国特色社会主义理论体系概论",
+          "course_type": "必修",
+          "credit": 3.0,
+          "score": 93,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "数据结构",
+          "course_type": "必修",
+          "credit": 2.0,
+          "score": 93,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "工科数学分析基础2",
+          "course_type": "必修",
+          "credit": 6.0,
+          "score": 93,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "大学英语4",
+          "course_type": "必修",
+          "credit": 2.0,
+          "score": 93,
+          "gpa": 4.0,
+          "research": "否",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "线性代数与解析几何",
+          "course_type": "必修",
+          "credit": 3.5,
+          "score": 93,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "大学生心理健康教育",
+          "course_type": "必修",
+          "credit": 2.0,
+          "score": 92,
+          "gpa": 4.0,
+          "research": "否",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "大学物理实验1",
+          "course_type": "必修",
+          "credit": 1.0,
+          "score": 91,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "创造性思维与创新方法",
+          "course_type": "选修",
+          "credit": 2.0,
+          "score": 91,
+          "gpa": 4.0,
+          "research": "否",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "大学英语2",
+          "course_type": "必修",
+          "credit": 2.0,
+          "score": 91,
+          "gpa": 4.0,
+          "research": "否",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "自动化专业导论",
+          "course_type": "必修",
+          "credit": 1.0,
+          "score": 90,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "体育-基础2",
+          "course_type": "必修",
+          "credit": 0.5,
+          "score": 90,
+          "gpa": 4.0,
+          "research": "否",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "体育",
+          "course_type": "必修",
+          "credit": 0.5,
+          "score": 90,
+          "gpa": 4.0,
+          "research": "否",
+          "year": "大三学年"
+        },
+        {
+          "course_name": "工程制图D",
+          "course_type": "必修",
+          "credit": 2.0,
+          "score": 89,
+          "gpa": 3.7,
+          "research": "是",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "模拟电子线路综合设计实验",
+          "course_type": "必修",
+          "credit": 1.5,
+          "score": 88,
+          "gpa": 3.7,
+          "research": "是",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "大学物理实验2",
+          "course_type": "必修",
+          "credit": 1.0,
+          "score": 88,
+          "gpa": 3.7,
+          "research": "是",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "体育-专项1",
+          "course_type": "必修",
+          "credit": 0.5,
+          "score": 88,
+          "gpa": 3.7,
+          "research": "否",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "工科数学分析基础1",
+          "course_type": "必修",
+          "credit": 5.0,
+          "score": 88,
+          "gpa": 3.7,
+          "research": "是",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "军训",
+          "course_type": "必修",
+          "credit": 2.0,
+          "score": 88,
+          "gpa": 3.7,
+          "research": "是",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "复变函数",
+          "course_type": "必修",
+          "credit": 2.0,
+          "score": 87,
+          "gpa": 3.7,
+          "research": "是",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "艺术与审美",
+          "course_type": "选修",
+          "credit": 2.0,
+          "score": 87,
+          "gpa": 3.7,
+          "research": "否",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "电路理论1",
+          "course_type": "必修",
+          "credit": 3.0,
+          "score": 87,
+          "gpa": 3.7,
+          "research": "是",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "大学英语3",
+          "course_type": "必修",
+          "credit": 2.0,
+          "score": 87,
+          "gpa": 3.7,
+          "research": "否",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "健康教育",
+          "course_type": "必修",
+          "credit": 0.5,
+          "score": 87,
+          "gpa": 3.7,
+          "research": "否",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "思想道德与法治",
+          "course_type": "必修",
+          "credit": 2.5,
+          "score": 87,
+          "gpa": 3.7,
+          "research": "是",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "工程训练B",
+          "course_type": "必修",
+          "credit": 2.0,
+          "score": 86,
+          "gpa": 3.7,
+          "research": "是",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "体育-专项2",
+          "course_type": "必修",
+          "credit": 0.5,
+          "score": 83,
+          "gpa": 3.3,
+          "research": "否",
+          "year": "大二学年"
+        },
+        {
+          "course_name": "中共党史",
+          "course_type": "选修",
+          "credit": 2.0,
+          "score": 83,
+          "gpa": 3.3,
+          "research": "否",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "经济学原理",
+          "course_type": "选修",
+          "credit": 2.0,
+          "score": 81,
+          "gpa": 3.0,
+          "research": "否",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "电类创新实践训练",
+          "course_type": "必修",
+          "credit": 1.0,
+          "score": 81,
+          "gpa": 3.0,
+          "research": "否",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "体育-基础1",
+          "course_type": "必修",
+          "credit": 0.5,
+          "score": 79,
+          "gpa": 3.0,
+          "research": "否",
+          "year": "大一学年"
+        },
+        {
+          "course_name": "计算机原理A",
+          "course_type": "必修",
+          "credit": 4.0,
+          "score": 96,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大三学年"
+        },
+        {
+          "course_name": "检测技术及仪表实验",
+          "course_type": "必修",
+          "credit": 1.0,
+          "score": 98,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大三学年"
+        },
+        {
+          "course_name": "自动控制原理实验A",
+          "course_type": "必修",
+          "credit": 1.0,
+          "score": 90,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大三学年"
+        },
+        {
+          "course_name": "自动控制原理A",
+          "course_type": "必修",
+          "credit": 4.0,
+          "score": 99,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大三学年"
+        },
+        {
+          "course_name": "检测技术及仪表",
+          "course_type": "必修",
+          "credit": 3.0,
+          "score": 98,
+          "gpa": 4.0,
+          "research": "是",
+          "year": "大三学年"
+        },
+        {
+          "course_name": "电力电子技术实验A",
+          "course_type": "选修",
+          "credit": 1.0,
+          "score": 93,
+          "gpa": 4.0,
+          "research": "否",
+          "year": "大三学年"
+        }
+      ]
+    }
+  }
+}

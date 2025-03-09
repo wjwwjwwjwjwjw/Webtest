@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}设置班级名称 - 班级成绩管理系统{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">设置班级名称</h2>
+    
+    <div class="card">
+        <div class="card-body">
+            <form method="POST" class="needs-validation" novalidate>
+                <div class="form-group">
+                    <label for="class_name">班级名称 <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="class_name" name="class_name" 
+                           value="{{ class_name }}" required>
+                    <div class="invalid-feedback">
+                        请输入班级名称
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">保存</button>
+                    <a href="{{ url_for('index') }}" class="btn btn-secondary">返回</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 

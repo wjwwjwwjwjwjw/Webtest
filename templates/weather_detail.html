@@ -1,0 +1,574 @@
+{% extends 'base.html' %}
+
+{% block title %}天气详情 - 班级成绩管理系统{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<style>
+    .weather-details-page {
+        background-color: #f5f7fa;
+        min-height: calc(100vh - 140px);
+        padding: 15px 0;
+    }
+    
+    .weather-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 15px;
+    }
+    
+    .weather-detail-box {
+        background-color: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+    
+    .weather-detail-box:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .weather-detail-header {
+        font-size: 14px;
+        color: #6c757d;
+        padding: 15px 20px 5px;
+    }
+    
+    .weather-detail-content {
+        padding: 5px 20px 20px;
+    }
+    
+    .weather-value {
+        font-size: 32px;
+        font-weight: 600;
+        margin: 5px 0;
+    }
+    
+    .weather-unit {
+        font-size: 16px;
+        color: #6c757d;
+    }
+    
+    .weather-description {
+        font-size: 14px;
+        color: #6c757d;
+        margin-top: 10px;
+    }
+    
+    .weather-bar-container {
+        margin-top: 10px;
+        height: 8px;
+        background-color: #e9ecef;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    
+    .weather-bar {
+        height: 100%;
+        border-radius: 4px;
+    }
+    
+    .weather-icon {
+        width: 48px;
+        height: 48px;
+        margin-right: 15px;
+    }
+    
+    .current-temp-container {
+        margin: 20px 0;
+    }
+    
+    .weather-temperature {
+        font-size: 72px;
+        font-weight: 300;
+    }
+    
+    .weather-main-desc {
+        font-size: 24px;
+        margin-top: 10px;
+    }
+    
+    /* 针对不同类型的卡片的自定义样式 */
+    .temp-box .weather-bar {
+        background: linear-gradient(90deg, #3ec9fe 0%, #f82a71 100%);
+    }
+    
+    .humidity-box .weather-bar {
+        background: linear-gradient(90deg, #3ec9fe 0%, #0070ff 100%);
+    }
+    
+    .uv-box .weather-bar {
+        background: linear-gradient(90deg, #83d474 0%, #ffc13d 50%, #ff4d4d 100%);
+    }
+    
+    .aqi-box .weather-bar {
+        background: linear-gradient(90deg, #83d474 0%, #ffc13d 50%, #ff4d4d 100%);
+    }
+    
+    .wind-compass {
+        width: 120px;
+        height: 120px;
+        position: relative;
+        margin: 20px auto;
+    }
+    
+    .compass-circle {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 2px solid #e0e0e0;
+        position: relative;
+    }
+    
+    .compass-directions {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .direction {
+        position: absolute;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    .direction.n {
+        top: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .direction.e {
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    
+    .direction.s {
+        bottom: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .direction.w {
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    
+    .wind-arrow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 60px;
+        height: 60px;
+        margin-left: -30px;
+        margin-top: -30px;
+        background-color: #007aff;
+        clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        transform-origin: center center;
+        transition: transform 1s ease;
+    }
+    
+    .sunrise-sunset-graph {
+        position: relative;
+        height: 80px;
+        margin: 20px 0;
+        overflow: hidden;
+    }
+    
+    .sun-arc {
+        height: 60px;
+        background: linear-gradient(transparent 0%, rgba(255, 204, 0, 0.1) 40%, rgba(255, 204, 0, 0.2) 70%);
+        border-radius: 180px 180px 0 0;
+        position: relative;
+    }
+    
+    .sun-icon {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        background-color: #ffcc00;
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
+        transform: translate(-50%, -50%);
+    }
+    
+    .time-markers {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5px;
+    }
+    
+    .time-marker {
+        font-size: 12px;
+        color: #6c757d;
+    }
+    
+    .moon-phase {
+        width: 120px;
+        height: 120px;
+        margin: 20px auto;
+        position: relative;
+        border-radius: 50%;
+        background-color: #f0f0f0;
+        overflow: hidden;
+    }
+    
+    .moon-light {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50%;
+        height: 100%;
+        background-color: #fff;
+        border-radius: 0 100px 100px 0;
+    }
+    
+    .visibility-scale {
+        margin-top: 20px;
+        height: 10px;
+        background: linear-gradient(90deg, #e9ecef 0%, #4cc9f0 100%);
+        border-radius: 5px;
+        position: relative;
+    }
+    
+    .visibility-marker {
+        position: absolute;
+        top: -10px;
+        width: 6px;
+        height: 20px;
+        background-color: #007aff;
+        border-radius: 3px;
+        transform: translateX(-3px);
+    }
+    
+    .pressure-gauge {
+        width: 100%;
+        height: 10px;
+        background: linear-gradient(90deg, #e63946 0%, #ffb703 50%, #52b788 100%);
+        border-radius: 5px;
+        margin-top: 20px;
+        position: relative;
+    }
+    
+    .pressure-pointer {
+        position: absolute;
+        top: -10px;
+        width: 6px;
+        height: 20px;
+        background-color: #212529;
+        border-radius: 3px;
+        transform: translateX(-3px);
+    }
+    
+    .card-header {
+        border-bottom: none;
+        background-color: transparent;
+    }
+    
+    .location-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+    .location-name {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 0 10px 0 0;
+    }
+    
+    .btn-back {
+        margin-right: 15px;
+        color: #6c757d;
+        transition: all 0.2s ease;
+    }
+    
+    .btn-back:hover {
+        color: #343a40;
+        transform: translateX(-3px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="weather-details-page">
+    <div class="container">
+        <!-- 页面标题和位置 -->
+        <div class="location-header">
+            <a href="{{ url_for('index') }}" class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <h2 class="location-name" id="detail-location">加载中...</h2>
+            <span class="badge bg-primary" id="detail-date">今天</span>
+        </div>
+        
+        <!-- 主要天气信息 -->
+        <div class="card mb-4 animate__animated animate__fadeIn">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center current-temp-container">
+                            <img id="detail-weather-icon" src="https://openweathermap.org/img/wn/02d@2x.png" alt="天气图标" class="weather-icon me-3">
+                            <div>
+                                <div class="weather-temperature"><span id="detail-temperature">--</span>°</div>
+                                <div class="weather-main-desc" id="detail-weather-desc">加载中...</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <div class="text-muted small">体感温度</div>
+                                    <div class="fs-5 fw-bold"><span id="detail-feels-like">--</span>°</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <div class="text-muted small">湿度</div>
+                                    <div class="fs-5 fw-bold"><span id="detail-humidity">--</span>%</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <div class="text-muted small">风速</div>
+                                    <div class="fs-5 fw-bold"><span id="detail-wind-speed">--</span> m/s</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <div class="text-muted small">气压</div>
+                                    <div class="fs-5 fw-bold"><span id="detail-pressure">--</span> hPa</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 天气详情网格 -->
+        <div class="weather-grid">
+            <!-- 温度卡片 -->
+            <div class="weather-detail-box temp-box animate__animated animate__fadeInUp">
+                <div class="weather-detail-header">温度</div>
+                <div class="weather-detail-content">
+                    <div class="weather-value"><span id="grid-temperature">--</span><span class="weather-unit">°C</span></div>
+                    <div class="weather-description" id="grid-temp-desc">持续降温，将于下午7:00达到最低气温4°。上午3:00达到较高温度3°。</div>
+                    <div class="weather-bar-container">
+                        <div class="weather-bar" style="width: 60%;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 体感温度卡片 -->
+            <div class="weather-detail-box animate__animated animate__fadeInUp animate__delay-1s">
+                <div class="weather-detail-header">体感温度</div>
+                <div class="weather-detail-content">
+                    <div class="d-flex align-items-center">
+                        <div class="weather-value"><span id="grid-feels-like">--</span><span class="weather-unit">°C</span></div>
+                    </div>
+                    <div class="weather-description" id="grid-feels-desc">主导因素：湿度</div>
+                    <div id="grid-feels-extra" class="weather-description">由于湿度原因，感觉比实际温度更暖和。</div>
+                </div>
+            </div>
+            
+            <!-- 云量卡片 -->
+            <div class="weather-detail-box animate__animated animate__fadeInUp animate__delay-2s">
+                <div class="weather-detail-header">云量</div>
+                <div class="weather-detail-content">
+                    <div class="d-flex justify-content-center">
+                        <div class="text-center">
+                            <i class="fas fa-cloud fa-3x text-primary mb-3"></i>
+                            <div class="weather-value"><span id="grid-clouds">--</span><span class="weather-unit">%</span></div>
+                            <div class="weather-description" id="grid-clouds-desc">晴朗</div>
+                        </div>
+                    </div>
+                    <div class="weather-description" id="grid-clouds-extra">云量将减少，下午4:00时天空无云。今天晚上预计有云。</div>
+                </div>
+            </div>
+            
+            <!-- 降水卡片 -->
+            <div class="weather-detail-box animate__animated animate__fadeInUp animate__delay-3s">
+                <div class="weather-detail-header">降水</div>
+                <div class="weather-detail-content">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="weather-value"><span id="grid-precipitation">0</span><span class="weather-unit">毫米</span></div>
+                            <div class="weather-description">接下来的24小时</div>
+                        </div>
+                        <i class="fas fa-umbrella fa-2x text-primary"></i>
+                    </div>
+                    <div class="weather-description" id="grid-precip-desc">无降水</div>
+                    <div class="weather-description" id="grid-precip-extra">未来24小时没有降水。</div>
+                </div>
+            </div>
+            
+            <!-- 风速卡片 -->
+            <div class="weather-detail-box animate__animated animate__fadeInUp animate__delay-4s">
+                <div class="weather-detail-header">风速</div>
+                <div class="weather-detail-content">
+                    <div class="row">
+                        <div class="col-7">
+                            <div class="wind-compass">
+                                <div class="compass-circle"></div>
+                                <div class="compass-directions">
+                                    <div class="direction n">北</div>
+                                    <div class="direction e">东</div>
+                                    <div class="direction s">南</div>
+                                    <div class="direction w">西</div>
+                                </div>
+                                <div class="wind-arrow" id="wind-direction" style="transform: rotate(135deg);"></div>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="mt-3">
+                                <div class="weather-value"><span id="grid-wind-speed">12</span></div>
+                                <div class="weather-unit">公里/小时</div>
+                                <div class="weather-description" id="grid-wind-extra">风速</div>
+                            </div>
+                            <div class="mt-3">
+                                <div class="weather-value"><span id="grid-wind-gust">23</span></div>
+                                <div class="weather-unit">公里/小时</div>
+                                <div class="weather-description">阵风</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weather-description" id="grid-wind-desc">风力小风，东南风预计将达到风向保持平均速度13公里/小时 (阵风风速为36)。西南风的夜间平均...</div>
+                </div>
+            </div>
+            
+            <!-- 湿度卡片 -->
+            <div class="weather-detail-box humidity-box animate__animated animate__fadeInUp animate__delay-1s">
+                <div class="weather-detail-header">湿度</div>
+                <div class="weather-detail-content">
+                    <div class="weather-value"><span id="grid-humidity">65</span><span class="weather-unit">%</span></div>
+                    <div class="weather-description">相对湿度</div>
+                    <div class="weather-bar-container">
+                        <div class="weather-bar" id="humidity-bar" style="width: 65%;"></div>
+                    </div>
+                    <div class="mt-2" id="grid-humidity-desc">普通</div>
+                    <div class="weather-description" id="grid-humidity-extra">持续下降，在下午3:48时达到65%的最低值。</div>
+                </div>
+            </div>
+            
+            <!-- 紫外线卡片 -->
+            <div class="weather-detail-box uv-box animate__animated animate__fadeInUp animate__delay-2s">
+                <div class="weather-detail-header">紫外线</div>
+                <div class="weather-detail-content">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="weather-value"><span id="grid-uv-index">3</span></div>
+                        <div class="text-center">
+                            <i class="fas fa-sun fa-2x text-warning"></i>
+                        </div>
+                    </div>
+                    <div class="weather-description" id="grid-uv-desc">中等</div>
+                    <div class="weather-bar-container">
+                        <div class="weather-bar" id="uv-bar" style="width: 25%;"></div>
+                    </div>
+                    <div class="weather-description" id="grid-uv-extra">今天的最大紫外线辐照量是适中的。</div>
+                </div>
+            </div>
+            
+            <!-- AQI卡片 -->
+            <div class="weather-detail-box aqi-box animate__animated animate__fadeInUp animate__delay-3s">
+                <div class="weather-detail-header">AQI</div>
+                <div class="weather-detail-content">
+                    <div class="d-flex justify-content-center">
+                        <div class="text-center">
+                            <div class="weather-value"><span id="grid-aqi">88</span></div>
+                            <div class="weather-description" id="grid-aqi-desc">良</div>
+                        </div>
+                    </div>
+                    <div class="weather-bar-container">
+                        <div class="weather-bar" id="aqi-bar" style="width: 45%;"></div>
+                    </div>
+                    <div class="weather-description" id="grid-aqi-extra">空气质量良好，主要污染物为: PM2.5 66 μg/m³。</div>
+                </div>
+            </div>
+            
+            <!-- 可见度卡片 -->
+            <div class="weather-detail-box animate__animated animate__fadeInUp animate__delay-4s">
+                <div class="weather-detail-header">可见度</div>
+                <div class="weather-detail-content">
+                    <div class="weather-value"><span id="grid-visibility">4.1</span><span class="weather-unit">公里</span></div>
+                    <div class="weather-description" id="grid-visibility-desc">良好</div>
+                    <div class="visibility-scale">
+                        <div class="visibility-marker" id="visibility-marker" style="left: 40%;"></div>
+                    </div>
+                    <div class="weather-description" id="grid-visibility-extra">在15公里内持续稳定。预计夜晚能见度极好。</div>
+                </div>
+            </div>
+            
+            <!-- 气压卡片 -->
+            <div class="weather-detail-box animate__animated animate__fadeInUp animate__delay-1s">
+                <div class="weather-detail-header">气压</div>
+                <div class="weather-detail-content">
+                    <div class="weather-value"><span id="grid-pressure">1015</span><span class="weather-unit">hPa</span></div>
+                    <div class="text-muted small" id="grid-pressure-time">15:48 (现在)</div>
+                    <div class="pressure-gauge">
+                        <div class="pressure-pointer" id="pressure-pointer" style="left: 60%;"></div>
+                    </div>
+                    <div class="weather-description mt-3" id="grid-pressure-trend">快速下降</div>
+                    <div class="weather-description" id="grid-pressure-extra">在过去3小时内快速下降。预计在接下来的3小时内将保持上升。</div>
+                </div>
+            </div>
+            
+            <!-- 日出日落卡片 -->
+            <div class="weather-detail-box animate__animated animate__fadeInUp animate__delay-2s">
+                <div class="weather-detail-header">太阳</div>
+                <div class="weather-detail-content">
+                    <div class="sunrise-sunset-graph">
+                        <div class="sun-arc">
+                            <div class="sun-icon" id="sun-position" style="left: 70%; top: 40%;"></div>
+                        </div>
+                        <div class="time-markers">
+                            <div class="time-marker" id="sunrise-time">06:15</div>
+                            <div class="time-marker text-center" id="solar-noon">11 小时 38 分钟</div>
+                            <div class="time-marker text-end" id="sunset-time">17:53</div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <div class="text-muted small">日出</div>
+                            <div class="fw-bold">06:15</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-muted small">日长</div>
+                            <div class="fw-bold">11h 38m</div>
+                        </div>
+                        <div class="text-end">
+                            <div class="text-muted small">日落</div>
+                            <div class="fw-bold">17:53</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 月相卡片 -->
+            <div class="weather-detail-box animate__animated animate__fadeInUp animate__delay-3s">
+                <div class="weather-detail-header">月相</div>
+                <div class="weather-detail-content">
+                    <div class="moon-phase">
+                        <div class="moon-light"></div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <div class="fw-bold" id="moon-phase-name">盈凸月</div>
+                        <div class="text-muted small">月相</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/weather_detail.js') }}"></script>
+{% endblock %} 

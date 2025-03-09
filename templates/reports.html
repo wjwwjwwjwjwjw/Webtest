@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+
+{% block title %}班级统计报告{% endblock %}
+
+{% block content %}
+<div class="container my-4 fade-in">
+  <h2 class="mb-4">班级统计报告</h2>
+  
+  <!-- 班级信息卡片 -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5 class="card-title mb-0">班级信息</h5>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="stat-item">
+            <div class="stat-label">班级名称</div>
+            <div class="stat-value">{{ class_name or '未设置班级名称' }}</div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-item">
+            <div class="stat-label">班级平均分</div>
+            <div class="stat-value text-primary">{{ "%.2f"|format(class_avg_score) }}</div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-item">
+            <div class="stat-label">平均绩点</div>
+            <div class="stat-value text-success">{{ "%.2f"|format(class_avg_gpa) }}</div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-item">
+            <div class="stat-label">及格率</div>
+            <div class="stat-value text-info">{{ "%.1f%%"|format(pass_rate * 100) }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 班级统计图表 -->
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-header">
+          <h5 class="card-title mb-0">成绩分布</h5>
+        </div>
+        <div class="card-body">
+          <canvas id="scoreDistributionChart" height="250"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-header">
+          <h5 class="card-title mb-0">课程类型分布</h5>
+        </div>
+        <div class="card-body">
+          <canvas id="courseTypeChart" height="250"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 学生成绩表格 -->
+  <div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5 class="card-title mb-0">学生成绩表</h5>
+      <a href="{{ url_for('export_excel') }}" class="btn btn-primary">
+        <i class="fas fa-file-excel"></i> 导出Excel
+      </a>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">排名</th>
+              <th scope="col">学号</th>
+              <th scope="col">姓名</th>
+              <th scope="col">加权平均分</th>
+              <th scope="col">平均绩点</th>
+              <th scope="col">必修学分</th>
+              <th scope="col">总学分</th>
+              <th scope="col">90分以上</th>
+              <th scope="col">95分以上</th>
+              <th scope="col">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for stat in class_stats %}
+            <tr>
+              <th scope="row">{{ loop.index }}</th>
+              <td>{{ stat.student_id }}</td>
+              <td>{{ stat.name }}</td>
+              <td>{{ "%.2f"|format(stat.avg_score) }}</td>
+              <td>{{ "%.2f"|format(stat.avg_gpa) }}</td>
+              <td>{{ stat.required_credits }}</td>
+              <td>{{ stat.total_credits }}</td>
+              <td>{{ stat.count_90 }}</td>
+              <td>{{ stat.count_95 }}</td>
+              <td>
+                <a href="{{ url_for('student_detail', student_id=stat.student_id) }}" class="btn btn-sm btn-info">
+                  <i class="fas fa-eye"></i> 查看详情
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // 成绩分布图表
+    const scoreRanges = ['<60', '60-69', '70-79', '80-89', '90-94', '95-100'];
+    const scoreDistribution = [0, 0, 0, 0, 0, 0];
+    
+    // 课程类型分布
+    const courseTypes = {};
+    
+    // 从学生统计数据中收集信息
+    const students = {{ class_stats|tojson }};
+    
+    students.forEach(student => {
+      // 计算90分及以上的人数
+      if (student.avg_score >= 95) {
+        scoreDistribution[5]++;
+      } else if (student.avg_score >= 90) {
+        scoreDistribution[4]++;
+      } else if (student.avg_score >= 80) {
+        scoreDistribution[3]++;
+      } else if (student.avg_score >= 70) {
+        scoreDistribution[2]++;
+      } else if (student.avg_score >= 60) {
+        scoreDistribution[1]++;
+      } else {
+        scoreDistribution[0]++;
+      }
+    });
+    
+    // 渲染成绩分布图表
+    const scoreDistributionCtx = document.getElementById('scoreDistributionChart').getContext('2d');
+    new Chart(scoreDistributionCtx, {
+      type: 'bar',
+      data: {
+        labels: scoreRanges,
+        datasets: [{
+          label: '学生人数',
+          data: scoreDistribution,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.8)',
+            'rgba(255, 159, 64, 0.8)',
+            'rgba(255, 205, 86, 0.8)',
+            'rgba(75, 192, 192, 0.8)',
+            'rgba(54, 162, 235, 0.8)',
+            'rgba(153, 102, 255, 0.8)'
+          ],
+          borderColor: [
+            'rgb(255, 99, 132)',
+            'rgb(255, 159, 64)',
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false
+          },
+          title: {
+            display: true,
+            text: '学生平均分分布'
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return `学生人数: ${context.raw}`;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              precision: 0
+            }
+          }
+        }
+      }
+    });
+    
+    // 模拟课程类型数据（实际应该从后端传递）
+    const typeData = {
+      '必修课': {{ class_stats|length }},
+      '选修课': Math.floor({{ class_stats|length }} * 0.7),
+      '实验课': Math.floor({{ class_stats|length }} * 0.5),
+      '实践课': Math.floor({{ class_stats|length }} * 0.3)
+    };
+    
+    // 渲染课程类型分布图表
+    const courseTypeCtx = document.getElementById('courseTypeChart').getContext('2d');
+    new Chart(courseTypeCtx, {
+      type: 'pie',
+      data: {
+        labels: Object.keys(typeData),
+        datasets: [{
+          data: Object.values(typeData),
+          backgroundColor: [
+            'rgba(54, 162, 235, 0.8)',
+            'rgba(75, 192, 192, 0.8)',
+            'rgba(153, 102, 255, 0.8)',
+            'rgba(255, 159, 64, 0.8)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'right'
+          },
+          title: {
+            display: true,
+            text: '课程类型分布'
+          }
+        }
+      }
+    });
+  });
+</script>
+{% endblock %} 

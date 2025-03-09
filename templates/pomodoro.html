@@ -1,0 +1,56 @@
+<div class="pomodoro-container">
+  <div class="pomodoro-widget">
+    <div class="pomodoro-header">
+      <h3>专注时钟</h3>
+      <div class="pomodoro-modes">
+        <button id="pomodoro-mode" class="mode-active">专注</button>
+        <button id="short-break-mode">短休息</button>
+        <button id="long-break-mode">长休息</button>
+      </div>
+    </div>
+    
+    <div class="pomodoro-timer">
+      <div class="timer-display">
+        <div class="timer-circle">
+          <svg class="timer-progress" viewBox="0 0 100 100">
+            <circle class="timer-path-elapsed" cx="50" cy="50" r="45"></circle>
+            <circle class="timer-path-remaining" cx="50" cy="50" r="45"></circle>
+          </svg>
+          <div class="timer-label">
+            <span id="timer-minutes">25</span>:<span id="timer-seconds">00</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="timer-controls">
+        <button id="timer-start" class="timer-button">
+          <i class="fas fa-play"></i>
+        </button>
+        <button id="timer-pause" class="timer-button" style="display: none;">
+          <i class="fas fa-pause"></i>
+        </button>
+        <button id="timer-reset" class="timer-button">
+          <i class="fas fa-redo-alt"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div class="pomodoro-task">
+      <div class="task-input-group">
+        <input type="text" id="task-input" placeholder="我正在专注于...">
+        <button id="save-task">保存</button>
+      </div>
+      
+      <div class="pomodoro-stats">
+        <div class="stat-item">
+          <div class="stat-label">今日专注</div>
+          <div class="stat-value"><span id="focus-count">0</span> 次</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">总时长</div>
+          <div class="stat-value"><span id="focus-time">0</span> 分钟</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

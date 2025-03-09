@@ -1,0 +1,42 @@
+<div class="calendar-component">
+  <div class="calendar-header">
+    <div class="month-display">
+      <h3>{{ month_name }} {{ year }}</h3>
+    </div>
+    <div class="calendar-controls">
+      <button class="btn-prev" onclick="prevMonth()"><i class="fas fa-chevron-left"></i></button>
+      <button class="btn-today" onclick="goToToday()">今天</button>
+      <button class="btn-next" onclick="nextMonth()"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="calendar-view-mode">
+      <button class="btn-month btn-active" onclick="switchView('month')">月</button>
+      <button class="btn-week" onclick="switchView('week')">周</button>
+    </div>
+  </div>
+  
+  <div class="calendar-body">
+    <div class="weekdays">
+      <div class="day">一</div>
+      <div class="day">二</div>
+      <div class="day">三</div>
+      <div class="day">四</div>
+      <div class="day">五</div>
+      <div class="day">六</div>
+      <div class="day">日</div>
+    </div>
+    <div class="days-grid">
+      {% for week in calendar_weeks %}
+        <div class="week">
+          {% for day in week %}
+            <div class="day-cell {% if day.is_today %}today{% endif %} {% if day.is_current_month == false %}other-month{% endif %}" data-date="{{ day.date }}">
+              {{ day.day }}
+              {% if day.has_events %}
+                <div class="event-indicator"></div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div> 

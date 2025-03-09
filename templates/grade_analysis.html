@@ -1,0 +1,315 @@
+{% extends "base.html" %}
+
+{% block title %}成绩分析 - {{ student.name }}{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <h2 class="mb-4">
+        <i class="fas fa-chart-line"></i> 
+        {{ student.name }} 的成绩分析
+    </h2>
+
+    <!-- 总体统计卡片 -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">加权平均分</h5>
+                    <h3 class="text-primary">{{ "%.2f"|format(analysis.weighted_average) }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">加权绩点</h5>
+                    <h3 class="text-success">{{ "%.2f"|format(analysis.weighted_gpa) }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">总学分</h5>
+                    <h3 class="text-info">{{ "%.1f"|format(analysis.total_credits) }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">课程数量</h5>
+                    <h3 class="text-warning">{{ analysis.course_count }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 图表区域 -->
+    <div class="row mb-4">
+        <!-- 成绩分布柱状图 -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">成绩分布</h5>
+                    <canvas id="gradeDistChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 课程类型占比饼图 -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">课程类型占比</h5>
+                    <canvas id="courseTypePieChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <!-- 学期成绩趋势折线图 -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">成绩趋势</h5>
+                    <canvas id="gradeTrendChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 课程表现雷达图 -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">课程表现分析</h5>
+                    <canvas id="performanceRadarChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <!-- 成绩箱线图 -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">成绩分布箱线图</h5>
+                    <canvas id="gradeBoxPlot"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 学分-成绩散点图 -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">学分-成绩关系</h5>
+                    <canvas id="creditScoreScatter"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 描述性统计表格 -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">描述性统计</h5>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>统计指标</th>
+                            <th>必修课</th>
+                            <th>选修课</th>
+                            <th>保研课程</th>
+                            <th>全部课程</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>平均分</td>
+                            <td>{{ "%.2f"|format(analysis.stats.required.mean) }}</td>
+                            <td>{{ "%.2f"|format(analysis.stats.elective.mean) }}</td>
+                            <td>{{ "%.2f"|format(analysis.stats.research.mean) }}</td>
+                            <td>{{ "%.2f"|format(analysis.stats.all.mean) }}</td>
+                        </tr>
+                        <tr>
+                            <td>标准差</td>
+                            <td>{{ "%.2f"|format(analysis.stats.required.std) }}</td>
+                            <td>{{ "%.2f"|format(analysis.stats.elective.std) }}</td>
+                            <td>{{ "%.2f"|format(analysis.stats.research.std) }}</td>
+                            <td>{{ "%.2f"|format(analysis.stats.all.std) }}</td>
+                        </tr>
+                        <tr>
+                            <td>最高分</td>
+                            <td>{{ analysis.stats.required.max }}</td>
+                            <td>{{ analysis.stats.elective.max }}</td>
+                            <td>{{ analysis.stats.research.max }}</td>
+                            <td>{{ analysis.stats.all.max }}</td>
+                        </tr>
+                        <tr>
+                            <td>最低分</td>
+                            <td>{{ analysis.stats.required.min }}</td>
+                            <td>{{ analysis.stats.elective.min }}</td>
+                            <td>{{ analysis.stats.research.min }}</td>
+                            <td>{{ analysis.stats.all.min }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-box-and-violin-plot"></script>
+<script>
+// 准备数据
+const analysisData = {{ analysis|tojson|safe }};
+
+// 成绩分布柱状图
+new Chart(document.getElementById('gradeDistChart'), {
+    type: 'bar',
+    data: {
+        labels: ['60分以下', '60-69分', '70-79分', '80-89分', '90-100分'],
+        datasets: [{
+            label: '课程数量',
+            data: analysisData.grade_dist,
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
+                }
+            }
+        }
+    }
+});
+
+// 课程类型占比饼图
+new Chart(document.getElementById('courseTypePieChart'), {
+    type: 'pie',
+    data: {
+        labels: ['必修课', '选修课', '保研课程'],
+        datasets: [{
+            data: [
+                analysisData.course_type_stats.required,
+                analysisData.course_type_stats.elective,
+                analysisData.course_type_stats.research
+            ],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(255, 206, 86, 0.5)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true
+    }
+});
+
+// 成绩趋势折线图
+new Chart(document.getElementById('gradeTrendChart'), {
+    type: 'line',
+    data: {
+        labels: analysisData.trend.semesters,
+        datasets: [{
+            label: '加权平均分',
+            data: analysisData.trend.scores,
+            borderColor: 'rgba(75, 192, 192, 1)',
+            tension: 0.1,
+            fill: false
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                min: 0,
+                max: 100
+            }
+        }
+    }
+});
+
+// 课程表现雷达图
+new Chart(document.getElementById('performanceRadarChart'), {
+    type: 'radar',
+    data: {
+        labels: ['必修课程', '选修课程', '保研课程', '实验课程', '理论课程'],
+        datasets: [{
+            label: '平均分',
+            data: [
+                analysisData.stats.required.mean,
+                analysisData.stats.elective.mean,
+                analysisData.stats.research.mean,
+                analysisData.stats.lab.mean,
+                analysisData.stats.theory.mean
+            ],
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            pointBackgroundColor: 'rgba(54, 162, 235, 1)'
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            r: {
+                min: 0,
+                max: 100
+            }
+        }
+    }
+});
+
+// 学分-成绩散点图
+new Chart(document.getElementById('creditScoreScatter'), {
+    type: 'scatter',
+    data: {
+        datasets: [{
+            label: '课程',
+            data: analysisData.credit_score_data,
+            backgroundColor: 'rgba(75, 192, 192, 0.5)'
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: '学分'
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: '成绩'
+                },
+                min: 0,
+                max: 100
+            }
+        }
+    }
+});
+</script>
+{% endblock %} 

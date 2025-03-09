@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}使用帮助 - 班级成绩管理系统{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">使用帮助</h2>
+    
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0">基本操作说明</h5>
+        </div>
+        <div class="card-body">
+            <h6>1. 班级管理</h6>
+            <ul>
+                <li>在"班级设置"中设置班级名称</li>
+                <li>可以随时修改班级名称</li>
+            </ul>
+            
+            <h6>2. 学生管理</h6>
+            <ul>
+                <li>添加新学生：点击"添加新学生"按钮</li>
+                <li>查看学生信息：在学生列表中点击"查看详情"</li>
+                <li>必填信息：学号和姓名</li>
+            </ul>
+            
+            <h6>3. 成绩管理</h6>
+            <ul>
+                <li>在学生详情页面添加成绩</li>
+                <li>支持删除已添加的成绩</li>
+                <li>自动计算加权平均分和绩点</li>
+            </ul>
+            
+            <h6>4. 统计功能</h6>
+            <ul>
+                <li>查看班级整体统计数据</li>
+                <li>支持导出Excel格式的成绩单</li>
+                <li>显示学生排名和各项统计指标</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,7 @@
+{
+  "20221071389": {
+    "username": "20221071389",
+    "password_hash": "scrypt:32768:8:1$xUHTEK7yfo1dGO2X$06eaf396e8b21c37c53f6010345bd641260a3eb576697cb33ac7046933cd19313fe62fe2fe640922d95a74a23c23461f564dcbf7ad9f26011de7c551e404150c",
+    "is_admin": true
+  }
+}

@@ -1,0 +1,308 @@
+{% extends 'base.html' %}
+
+{% block title %}学生详情 - {{ student.name }}{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <h2 class="mb-4">{{ student.name }} 的成绩信息</h2>
+    
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0">基本信息</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>学号：</strong>{{ student.student_id }}</p>
+                    <p><strong>姓名：</strong>{{ student.name }}</p>
+                    <p><strong>性别：</strong>{{ student.gender }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>专业：</strong>{{ student.major }}</p>
+                    <p><strong>入学年份：</strong>{{ student.admission_year }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">成绩信息</h5>
+            <a href="{{ url_for('add_grade', student_id=student.student_id) }}" class="btn btn-primary btn-sm">
+                添加成绩
+            </a>
+        </div>
+        <div class="card-body">
+            {% if student.grades %}
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
+                        课程分类
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item active" href="#" data-filter="all">全部课程</a></li>
+                        <li><a class="dropdown-item" href="#" data-filter="必修">必修课程</a></li>
+                        <li><a class="dropdown-item" href="#" data-filter="选修">选修课程</a></li>
+                        <li><a class="dropdown-item" href="#" data-filter="是">保研课程</a></li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                        排序方式
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item active" href="#" data-sort="default">默认排序</a></li>
+                        <li><a class="dropdown-item" href="#" data-sort="score-desc">成绩从高到低</a></li>
+                        <li><a class="dropdown-item" href="#" data-sort="score-asc">成绩从低到高</a></li>
+                        <li><a class="dropdown-item" href="#" data-sort="credit-desc">学分从高到低</a></li>
+                        <li><a class="dropdown-item" href="#" data-sort="credit-asc">学分从低到高</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>课程名称</th>
+                            <th>课程性质</th>
+                            <th>学分</th>
+                            <th>成绩</th>
+                            <th>绩点</th>
+                            <th>保研课程</th>
+                            <th>学年</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for grade in student.grades %}
+                        <tr data-grade-id="{{ loop.index }}" class="grade-row">
+                            <td>{{ grade.course_name }}</td>
+                            <td>{{ grade.course_type }}</td>
+                            <td>{{ grade.credit }}</td>
+                            <td>{{ grade.score }}</td>
+                            <td>{{ grade.gpa }}</td>
+                            <td>
+                                {% if grade.research == '是' %}
+                                <span class="badge bg-info">是</span>
+                                {% else %}
+                                <span class="badge bg-secondary">否</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ grade.year }}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm edit-grade-btn"
+                                        data-course-name="{{ grade.course_name }}"
+                                        data-course-type="{{ grade.course_type }}"
+                                        data-credit="{{ grade.credit }}"
+                                        data-score="{{ grade.score }}"
+                                        data-research="{{ grade.research }}"
+                                        data-year="{{ grade.year }}">
+                                    <i class="fas fa-edit"></i> 修改
+                                </button>
+                                <form method="POST" action="{{ url_for('delete_grade', student_id=student.student_id, course_name=grade.course_name) }}" 
+                                      style="display: inline;" onsubmit="return confirm('确定要删除这门课程吗？')">
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash-alt"></i> 删除
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="alert alert-info">暂无成绩记录</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">统计数据</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="stats-card p-3">
+                        <h6>加权平均分</h6>
+                        <h3>{{ "%.2f"|format(stats.avg_score) }}</h3>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card p-3">
+                        <h6>平均绩点</h6>
+                        <h3>{{ "%.2f"|format(stats.avg_gpa) }}</h3>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card p-3">
+                        <h6>必修学分/总学分</h6>
+                        <h3>{{ stats.required_credits }}/{{ stats.total_credits }}</h3>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card p-3">
+                        <h6>90/95分以上门数</h6>
+                        <h3>{{ stats.count_90 }}/{{ stats.count_95 }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="{{ url_for('add_grade', student_id=student.student_id) }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> 添加成绩
+        </a>
+        <a href="{{ url_for('grade_analysis', student_id=student.student_id) }}" class="btn btn-info">
+            <i class="fas fa-chart-bar"></i> 成绩分析
+        </a>
+        <a href="{{ url_for('fetch_grades', student_id=student.student_id) }}" class="btn btn-success">
+            <i class="fas fa-cloud-download-alt"></i> 从教务系统获取成绩
+        </a>
+        <a href="{{ url_for('student_list') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> 返回学生列表
+        </a>
+    </div>
+</div>
+
+<!-- 添加成绩修改模态框 -->
+<div class="modal fade" id="editGradeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">修改成绩</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editGradeForm" method="POST">
+                    <input type="hidden" id="original_course_name" name="original_course_name">
+                    
+                    <div class="mb-3">
+                        <label for="edit_course_name" class="form-label">课程名称</label>
+                        <input type="text" class="form-control" id="edit_course_name" name="course_name" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="edit_course_type" class="form-label">课程性质</label>
+                        <select class="form-select" id="edit_course_type" name="course_type" required>
+                            <option value="必修">必修</option>
+                            <option value="选修">选修</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="edit_credit" class="form-label">学分</label>
+                        <select class="form-select" id="edit_credit" name="credit" required>
+                            {% for credit in [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0] %}
+                            <option value="{{ credit }}">{{ credit }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="edit_score" class="form-label">成绩</label>
+                        <input type="number" class="form-control" id="edit_score" name="score" 
+                               min="0" max="100" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="edit_research" class="form-label">是否保研课程</label>
+                        <select class="form-select" id="edit_research" name="research" required>
+                            <option value="否">否</option>
+                            <option value="是">是</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="edit_year" class="form-label">学年</label>
+                        <select class="form-select" id="edit_year" name="year" required>
+                            <option value="大一学年">大一学年</option>
+                            <option value="大二学年">大二学年</option>
+                            <option value="大三学年">大三学年</option>
+                            <option value="大四学年">大四学年</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="saveGradeChanges">保存修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const table = document.querySelector('table');
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    let currentFilter = 'all';
+    let currentSort = 'default';
+
+    // 筛选功能
+    document.querySelectorAll('[data-filter]').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            // 更新激活状态
+            document.querySelectorAll('[data-filter]').forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            currentFilter = this.dataset.filter;
+            filterAndSortTable();
+        });
+    });
+
+    // 排序功能
+    document.querySelectorAll('[data-sort]').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            // 更新激活状态
+            document.querySelectorAll('[data-sort]').forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            currentSort = this.dataset.sort;
+            filterAndSortTable();
+        });
+    });
+
+    function filterAndSortTable() {
+        const filteredRows = rows.filter(row => {
+            if (currentFilter === 'all') return true;
+            if (currentFilter === '必修' || currentFilter === '选修') {
+                return row.dataset.courseType === currentFilter;
+            }
+            if (currentFilter === '是') {
+                return row.dataset.research === '是';
+            }
+            return true;
+        });
+
+        // 排序
+        filteredRows.sort((a, b) => {
+            switch (currentSort) {
+                case 'score-desc':
+                    return parseFloat(b.dataset.score) - parseFloat(a.dataset.score);
+                case 'score-asc':
+                    return parseFloat(a.dataset.score) - parseFloat(b.dataset.score);
+                case 'credit-desc':
+                    return parseFloat(b.dataset.credit) - parseFloat(a.dataset.credit);
+                case 'credit-asc':
+                    return parseFloat(a.dataset.credit) - parseFloat(b.dataset.credit);
+                default:
+                    return 0; // 保持原始顺序
+            }
+        });
+
+        // 清空并重新填充表格
+        tbody.innerHTML = '';
+        filteredRows.forEach(row => tbody.appendChild(row.cloneNode(true)));
+    }
+});
+</script>
+{% endblock %} 

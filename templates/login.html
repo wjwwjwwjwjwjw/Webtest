@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}登录 - 班级成绩管理系统{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="auth-logo">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h2 class="auth-title">用户登录</h2>
+            <p class="auth-subtitle">Experience matters for good applications</p>
+        </div>
+        <div class="auth-body">
+            <form method="POST" class="auth-form">
+                <div class="mb-4">
+                    <label for="username" class="form-label form-label-modern">用户名</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <input type="text" class="form-control form-control-modern" id="username" name="username" placeholder="请输入用户名" required>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="form-label form-label-modern">密码</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" class="form-control form-control-modern" id="password" name="password" placeholder="请输入密码" required>
+                    </div>
+                </div>
+                <div class="mb-4 form-check">
+                    <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                    <label class="form-check-label" for="remember">30天内自动登录</label>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-modern btn-modern-primary btn-auth">登录</button>
+                </div>
+            </form>
+        </div>
+        <div class="auth-footer">
+            <p>还没有账号？<a href="{{ url_for('register') }}" class="text-primary">注册新账号</a></p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
