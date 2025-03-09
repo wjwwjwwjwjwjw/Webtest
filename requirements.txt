@@ -1,8 +1,0 @@
-# 根据你的应用实际使用的框架和库进行调整
-Flask==2.0.1
-# 如果使用FastAPI，取消下面的注释
-# fastapi==0.68.0
-# uvicorn==0.15.0
-# 其他可能的依赖
-requests==2.26.0
-python-dotenv==0.19.0 

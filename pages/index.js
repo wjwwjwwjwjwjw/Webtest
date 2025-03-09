@@ -8,7 +8,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [newItem, setNewItem] = useState('');
 
-  // »ñÈ¡Êı¾İ
+  // è·å–æ•°æ®
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -16,7 +16,7 @@ export default function Home() {
         setItems(response.data);
         setLoading(false);
       } catch (error) {
-        console.error('»ñÈ¡Êı¾İÊ§°Ü:', error);
+        console.error('è·å–æ•°æ®å¤±è´¥:', error);
         setLoading(false);
       }
     };
@@ -24,7 +24,7 @@ export default function Home() {
     fetchData();
   }, []);
 
-  // Ìí¼ÓĞÂÏîÄ¿
+  // æ·»åŠ æ–°é¡¹ç›®
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -35,33 +35,33 @@ export default function Home() {
       setItems([...items, response.data]);
       setNewItem('');
     } catch (error) {
-      console.error('Ìí¼ÓÏîÄ¿Ê§°Ü:', error);
+      console.error('æ·»åŠ é¡¹ç›®å¤±è´¥:', error);
     }
   };
 
-  // É¾³ıÏîÄ¿
+  // åˆ é™¤é¡¹ç›®
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/api/items?id=${id}`);
       setItems(items.filter(item => item.id !== id));
     } catch (error) {
-      console.error('É¾³ıÏîÄ¿Ê§°Ü:', error);
+      console.error('åˆ é™¤é¡¹ç›®å¤±è´¥:', error);
     }
   };
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>Web¹ÜÀíÏµÍ³</title>
-        <meta name="description" content="Web¹ÜÀíÏµÍ³" />
+        <title>Webç®¡ç†ç³»ç»Ÿ</title>
+        <meta name="description" content="Webç®¡ç†ç³»ç»Ÿ" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Web¹ÜÀíÏµÍ³</h1>
+        <h1 className={styles.title}>Webç®¡ç†ç³»ç»Ÿ</h1>
         
         <p className={styles.description}>
-          ¹ÜÀíÄúµÄWebÏîÄ¿
+          ç®¡ç†æ‚¨çš„Webé¡¹ç›®
         </p>
 
         <div className={styles.formContainer}>
@@ -70,18 +70,18 @@ export default function Home() {
               type="text"
               value={newItem}
               onChange={(e) => setNewItem(e.target.value)}
-              placeholder="ÊäÈëÏîÄ¿Ãû³Æ..."
+              placeholder="è¾“å…¥é¡¹ç›®åç§°..."
               className={styles.input}
             />
-            <button type="submit" className={styles.button}>Ìí¼Ó</button>
+            <button type="submit" className={styles.button}>æ·»åŠ </button>
           </form>
         </div>
 
         <div className={styles.grid}>
           {loading ? (
-            <p>¼ÓÔØÖĞ...</p>
+            <p>åŠ è½½ä¸­...</p>
           ) : items.length === 0 ? (
-            <p>ÔİÎŞÏîÄ¿£¬ÇëÌí¼Ó</p>
+            <p>æš‚æ— é¡¹ç›®ï¼Œè¯·æ·»åŠ </p>
           ) : (
             items.map((item) => (
               <div key={item.id} className={styles.card}>
@@ -90,7 +90,7 @@ export default function Home() {
                   onClick={() => handleDelete(item.id)}
                   className={styles.deleteButton}
                 >
-                  É¾³ı
+                  åˆ é™¤
                 </button>
               </div>
             ))

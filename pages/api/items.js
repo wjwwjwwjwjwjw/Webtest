@@ -1,20 +1,20 @@
-// Ä£ÄâÊı¾İ´æ´¢
+// æ¨¡æ‹Ÿæ•°æ®å­˜å‚¨
 let items = [
-  { id: 1, name: 'ÏîÄ¿A' },
-  { id: 2, name: 'ÏîÄ¿B' },
-  { id: 3, name: 'ÏîÄ¿C' }
+  { id: 1, name: 'é¡¹ç›®A' },
+  { id: 2, name: 'é¡¹ç›®B' },
+  { id: 3, name: 'é¡¹ç›®C' }
 ];
 
 export default function handler(req, res) {
-  // »ñÈ¡ËùÓĞÏîÄ¿
+  // è·å–æ‰€æœ‰é¡¹ç›®
   if (req.method === 'GET') {
     return res.status(200).json(items);
   }
   
-  // Ìí¼ÓĞÂÏîÄ¿
+  // æ·»åŠ æ–°é¡¹ç›®
   else if (req.method === 'POST') {
     const newItem = {
-      id: Date.now(), // Ê¹ÓÃÊ±¼ä´Á×÷ÎªÁÙÊ±ID
+      id: Date.now(), // ä½¿ç”¨æ—¶é—´æˆ³ä½œä¸ºä¸´æ—¶ID
       name: req.body.name
     };
     
@@ -22,7 +22,7 @@ export default function handler(req, res) {
     return res.status(201).json(newItem);
   }
   
-  // É¾³ıÏîÄ¿
+  // åˆ é™¤é¡¹ç›®
   else if (req.method === 'DELETE') {
     const id = parseInt(req.query.id);
     const itemIndex = items.findIndex(item => item.id === id);
@@ -32,11 +32,11 @@ export default function handler(req, res) {
       items = items.filter(item => item.id !== id);
       return res.status(200).json(deletedItem);
     } else {
-      return res.status(404).json({ message: 'ÏîÄ¿Î´ÕÒµ½' });
+      return res.status(404).json({ message: 'é¡¹ç›®æœªæ‰¾åˆ°' });
     }
   }
   
-  // ²»Ö§³ÖµÄ·½·¨
+  // ä¸æ”¯æŒçš„æ–¹æ³•
   else {
     res.setHeader('Allow', ['GET', 'POST', 'DELETE']);
     return res.status(405).end(`Method ${req.method} Not Allowed`);
